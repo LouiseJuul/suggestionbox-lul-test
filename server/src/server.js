@@ -10,18 +10,18 @@ const mongoose = require('mongoose');
 
 /**** Configuration ****/
 const app = express();
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/kittens'; 
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/suggestionDB'; 
 
 async function createServer() {
   // Connect db
   await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
   // Create data
-  const kittenDB = require('./kittenDB')(mongoose);
-  await kittenDB.bootstrap();
+  const suggestionDB = require('./suggestionDB')(mongoose);
+  await suggestionDB.bootstrap();
   
   // Require routes
-  const routes = require("./routes")(kittenDB); // Inject mongoose into routes module
+  const routes = require("./routes")(suggestionDB); // Inject mongoose into routes module
 
   // Add middleware
   app.use(bodyParser.json()); 
